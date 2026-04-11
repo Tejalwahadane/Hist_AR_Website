@@ -79,16 +79,14 @@
         </div>
 
         <!-- The Unified AR & 3D Container -->
-        <div id="web-ar-container" class="relative bg-white shadow-xl">
+        <div id="web-ar-container" class="relative bg-white shadow-xl overflow-hidden">
+            <video id="webcam-bg" autoplay playsinline muted class="hidden"></video>
             <!-- Core Model Viewer -->
-            <div class="p-4 relative z-20" id="model-wrapper">
+            <div class="p-4 relative z-20 h-full w-full" id="model-wrapper">
                 <model-viewer
                     id="mon-model"
                     src=""
                     alt="3D Model"
-                    ar
-                    ar-modes="webxr scene-viewer quick-look"
-                    ar-placement="floor"
                     camera-controls
                     auto-rotate
                     shadow-intensity="1"
@@ -96,14 +94,19 @@
                     class="standard-bg border-4 border-orange-100"
                     exposure="1.2"
                 >
-                    <button slot="ar-button" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-bold text-xl shadow-lg transition-transform transform hover:-translate-y-1 absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-3">
-                        <span class="text-2xl">📱</span> Launch True AR
-                    </button>
+                    <button slot="ar-button" style="display: none;"></button>
                     <!-- Loading Progress -->
                     <div class="progress-bar hide-in-ar" slot="progress-bar">
                         <div class="update-bar"></div>
                     </div>
                 </model-viewer>
+                
+                <button id="custom-ar-btn" onclick="startWebAR()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-bold text-xl shadow-lg transition-transform transform hover:-translate-y-1 absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-50 hide-in-ar">
+                    <span class="text-2xl">📱</span> Launch Web AR
+                </button>
+                <button id="exit-ar-btn" onclick="stopWebAR()" class="hidden bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-xl shadow-lg transition-transform transform hover:-translate-y-1 absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-50">
+                    <span class="text-2xl">✖</span> Exit AR
+                </button>
                 
                 <!-- Helper Text purely for 3D layout -->
                 <p class="text-center text-sm text-gray-500 mt-8 font-medium hide-in-ar">
@@ -383,6 +386,49 @@ Rules: Keep your answer super concise (max 3 sentences), engaging, and spoken in
 
         if (speechSynthesis.onvoiceschanged !== undefined) {
             speechSynthesis.onvoiceschanged = () => { /* loaded */ };
+        }
+
+        // ---------- WEB AR LOGIC ----------
+        let localStream = null;
+
+        async function startWebAR() {
+            try {
+                localStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                const videoElement = document.getElementById('webcam-bg');
+                videoElement.srcObject = localStream;
+                videoElement.classList.remove('hidden');
+                
+                document.body.classList.add('ar-mode-active');
+                document.getElementById('mon-model').classList.remove('standard-bg', 'border-4', 'border-orange-100');
+                document.getElementById('mon-model').classList.add('transparent-bg');
+                
+                document.getElementById('custom-ar-btn').classList.add('hidden');
+                document.getElementById('custom-ar-btn').classList.remove('flex');
+                
+                document.getElementById('exit-ar-btn').classList.remove('hidden');
+                document.getElementById('exit-ar-btn').classList.add('flex');
+            } catch (err) {
+                console.error("Camera access denied or not available", err);
+                alert("Could not access camera for Web AR.");
+            }
+        }
+
+        function stopWebAR() {
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+                localStream = null;
+            }
+            document.getElementById('webcam-bg').classList.add('hidden');
+            document.body.classList.remove('ar-mode-active');
+            
+            document.getElementById('mon-model').classList.add('standard-bg', 'border-4', 'border-orange-100');
+            document.getElementById('mon-model').classList.remove('transparent-bg');
+            
+            document.getElementById('custom-ar-btn').classList.remove('hidden');
+            document.getElementById('custom-ar-btn').classList.add('flex');
+            
+            document.getElementById('exit-ar-btn').classList.add('hidden');
+            document.getElementById('exit-ar-btn').classList.remove('flex');
         }
     </script>
 </body>
