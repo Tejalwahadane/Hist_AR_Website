@@ -1,0 +1,136 @@
+{
+  "taj-mahal": {
+    "id": "taj-mahal",
+    "name": "Taj Mahal",
+    "location": "Agra, Uttar Pradesh, India",
+    "modelPath": "./models/taj-mahal.glb",
+    "builtIn": "1653 AD",
+    "period": "Mughal Era",
+    "about": "The Taj Mahal is an iconic ivory-white marble mausoleum located on the banks of the Yamuna River in Agra, Uttar Pradesh. It was commissioned by Mughal Emperor Shah Jahan in memory of his beloved wife Mumtaz Mahal. It is a masterpiece of Mughal architecture.",
+    "highlights": [
+      "Built entirely with white Makrana marble from Rajasthan.",
+      "Features a central dome about 73 metres high, flanked by four minarets.",
+      "Intricate pietra dura inlay work with semi-precious stones.",
+      "Perfectly symmetrical layout with a grand charbagh garden.",
+      "Calligraphy of Quranic verses adorns the main gateway and tomb."
+    ]
+  },
+  "red-fort": {
+    "id": "red-fort",
+    "name": "Red Fort",
+    "location": "Delhi, India",
+    "modelPath": "./models/red-fort.glb",
+    "builtIn": "1648 AD",
+    "period": "Mughal Era",
+    "about": "The Red Fort is a historic fort in the city of Delhi in India that served as the main residence of the Mughal Emperors. Emperor Shah Jahan commissioned construction of the Red Fort in 1638, when he decided to shift his capital from Agra to Delhi.",
+    "highlights": [
+      "Constructed using massive red sandstone walls.",
+      "The architectural style reflects a fusion of Persian and Hindu traditions.",
+      "Key structures include the Diwan-i-Aam and Diwan-i-Khas.",
+      "Recognized as a UNESCO World Heritage Site."
+    ]
+  },
+  "qutub-minar": {
+    "id": "qutub-minar",
+    "name": "Qutub Minar",
+    "location": "Delhi, India",
+    "modelPath": "./models/qutub-minar.glb",
+    "builtIn": "1192 AD",
+    "period": "Delhi Sultanate",
+    "about": "Qutub Minar is a minaret and 'victory tower' that forms part of the Qutb complex, a UNESCO World Heritage Site. The tower is 72.5 meters tall, making it the tallest brick minaret in the world.",
+    "highlights": [
+      "Built with red sandstone and marble.",
+      "Contains a spiral staircase of 379 steps.",
+      "Inscribed with verses from the Quran.",
+      "The complex houses the famous Iron Pillar of Delhi which hasn't rusted in over 1600 years."
+    ]
+  },
+  "gateway-india": {
+    "id": "gateway-india",
+    "name": "Gateway of India",
+    "location": "Mumbai, Maharashtra, India",
+    "modelPath": "./models/gateway-india.glb",
+    "builtIn": "1924 AD",
+    "period": "British Raj",
+    "about": "The Gateway of India is an arch monument built during the 20th century in Bombay, India. It was erected to commemorate the landing of King George V and Queen Mary at Apollo Bunder on their visit to India in 1911.",
+    "highlights": [
+      "Built in the Indo-Saracenic style.",
+      "Constructed from yellow basalt and reinforced concrete.",
+      "Features intricate latticework and four turrets.",
+      "A primary tourist attraction and a gathering spot for locals."
+    ]
+  },
+  "golden-temple": {
+    "id": "golden-temple",
+    "name": "Golden Temple",
+    "location": "Amritsar, Punjab, India",
+    "modelPath": "./models/golden-temple.glb",
+    "builtIn": "1589 AD",
+    "period": "Sikh Empire",
+    "about": "The Golden Temple, also known as Sri Harmandir Sahib, is the preeminent spiritual site of Sikhism. It is built around a man-made pool that was completed by the fourth Sikh Guru, Guru Ram Das, in 1577.",
+    "highlights": [
+      "The upper floors are covered with gold leaf, giving the temple its name.",
+      "Surrounded by the Amrit Sarovar (Pool of Nectar).",
+      "Features beautiful floral patterns and semi-precious stones.",
+      "Open to people from all walks of life, symbolizing equality."
+    ]
+  },
+  "lotus-temple": {
+    "id": "lotus-temple",
+    "name": "Lotus Temple",
+    "location": "New Delhi, India",
+    "modelPath": "./models/lotus-temple.glb",
+    "builtIn": "1986 AD",
+    "period": "Modern Era",
+    "about": "The Lotus Temple, located in Delhi, India, is a Bahá'í House of Worship that is notable for its flowerlike shape. Like all Bahá'í Houses of Worship, it is open to all, regardless of religion or any other qualification.",
+    "highlights": [
+      "Designed by Iranian architect Fariborz Sahba in the shape of a lotus flower.",
+      "Composed of 27 free-standing marble-clad 'petals' arranged in clusters of three.",
+      "Set against beautifully manicured gardens and pools.",
+      "Received numerous architectural awards for its innovative design."
+    ]
+  },
+  "india-gate": {
+    "id": "india-gate",
+    "name": "India Gate",
+    "location": "New Delhi, India",
+    "modelPath": "./models/india-gate.glb",
+    "builtIn": "1931 AD",
+    "period": "British Raj",
+    "about": "The India Gate is a war memorial located astride the Rajpath. It stands as a memorial to 70,000 soldiers of the British Indian Army who died in between 1914 and 1921 in the First World War.",
+    "highlights": [
+      "Designed by Sir Edwin Lutyens.",
+      "Modeled after the Arc de Triomphe in Paris.",
+      "Constructed from red Bharatpur stone and granite.",
+      "The Amar Jawan Jyoti (Flame of the Immortal Soldier) burns constantly beneath the arch."
+    ]
+  },
+  "ellora-caves": {
+    "id": "ellora-caves",
+    "name": "Ellora Caves",
+    "location": "Aurangabad, Maharashtra, India",
+    "modelPath": "./models/ellora-caves.glb",
+    "builtIn": "600-1000 CE",
+    "period": "Rashtrakuta & Yadava Dynasties",
+    "about": "Ellora is a UNESCO World Heritage Site featuring Hindu, Buddhist and Jain monuments and artwork, excavated from the basalt cliff face of the Charanandri hills. It is one of the largest rock-cut monastery-temple cave complexes in the world.",
+    "highlights": [
+      "Features 34 rock-cut caves varying between Buddhist, Hindu, and Jain deities.",
+      "Includes the Kailasha temple, the largest single monolithic rock excavation in the world.",
+      "Detailed, intricate carvings narrate ancient mythologies.",
+      "Highlights religious harmony during ancient Indian history."
+    ]
+  },
+  "demo": {
+    "id": "demo",
+    "name": "Krishna Statue (Demo)",
+    "location": "Virtual Exhibition",
+    "modelPath": "./models/statue.glb",
+    "builtIn": "2024 CE",
+    "period": "Contemporary",
+    "about": "This is a demonstration 3D model of a beautiful Krishna statue setup for the AR Scanner.",
+    "highlights": [
+      "High-resolution 3D scan.",
+      "Optimized for WebXR."
+    ]
+  }
+}
