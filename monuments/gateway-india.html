@@ -247,7 +247,7 @@ async function toggleAudio(){
  try{
   btn.innerHTML="⏳ Generating AI Narration...";
   if(aiNarration===""){
-   const r=await fetch("http://127.0.0.1:8000/narrate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({monument:"Gateway of India"})});
+   const r=await fetch("https://hist-ar-api.onrender.com/narrate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({monument:"Gateway of India"})});
    const d=await r.json();
    aiNarration=d.narration;
   }
@@ -502,7 +502,7 @@ async function toggleAudio(){
 <script>
 new VoiceAssistant({
  monument:"Gateway of India",
- apiUrl:"http://127.0.0.1:8000/chat"
+ apiUrl:"https://hist-ar-api.onrender.com/chat"
 });
 </script>
 </body>
