@@ -256,7 +256,7 @@ async function toggleAudio(){
  try{
    btn.innerHTML="⏳ Generating AI Narration...";
    if(aiNarration===""){
-      const response=await fetch("http://127.0.0.1:8000/narrate",{
+      const response=await fetch("https://hist-ar-api.onrender.com/narrate",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({monument:"Ellora Caves"})
@@ -507,7 +507,7 @@ async function toggleAudio(){
 <script>
 new VoiceAssistant({
  monument:"Ellora Caves",
- apiUrl:"http://127.0.0.1:8000/chat"
+ apiUrl:"https://hist-ar-api.onrender.com/chat"
 });
 </script>
 </body>
