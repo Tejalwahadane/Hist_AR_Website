@@ -322,7 +322,7 @@ async function toggleAudio() {
 
         if (aiNarration === "") {
 
-            const response = await fetch("http://127.0.0.1:8000/narrate", {
+            const response = await fetch("https://hist-ar-api.onrender.com/narrate", {
 
                 method: "POST",
 
@@ -624,7 +624,7 @@ new VoiceAssistant({
 
     monument: "Qutub Minar",
 
-    apiUrl: "http://127.0.0.1:8000/chat"
+    apiUrl: "https://hist-ar-api.onrender.com/chat"
 
 });
 
