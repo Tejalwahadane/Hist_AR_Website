@@ -1,7 +1,7 @@
 class VoiceAssistant {
     constructor(config) {
         this.monument = config.monument;
-        this.apiUrl = config.apiUrl || "http://127.0.0.1:8000/chat";
+        this.apiUrl = config.apiUrl || "https://hist-ar-api.onrender.com/chat";
 
         this.isListening = false;
         this.isSpeaking = false;
