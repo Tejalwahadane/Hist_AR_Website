@@ -8,6 +8,9 @@
     
     <!-- MODEL-VIEWER: This loads 3D GLB models -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+    <!-- THREE.JS for rendering GLB on canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     
     <style>
         model-viewer {
@@ -28,6 +31,9 @@
         }
         
         #arVideo {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -39,6 +45,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -48,8 +55,8 @@
         <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
             <!-- Monument Info -->
             <div class="bg-gradient-to-r from-orange-100 to-amber-100 p-6">
-                <h1 class="text-3xl font-bold text-gray-900"> KRISHNA STATUE </h1>
-                <p class="text-lg text-gray-700">📍 Wagholi, Maharashtra </p>
+                <h1 class="text-3xl font-bold text-gray-900">KRISHNA STATUE </h1>
+                <p class="text-lg text-gray-700">📍 Maharashtra </p>
             </div>
 
             <!-- 3D MODEL VIEWER - THIS LOADS THE GLB FILE -->
@@ -81,11 +88,11 @@
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="bg-orange-50 p-4 rounded-lg">
                         <span class="text-sm font-semibold text-orange-600">BUILT IN</span>
-                        <p class="text-2xl font-bold text-gray-900">2026</p>
+                        <p class="text-2xl font-bold text-gray-900">1648 AD</p>
                     </div>
                     <div class="bg-orange-50 p-4 rounded-lg">
                         <span class="text-sm font-semibold text-orange-600">PERIOD</span>
-                        <p class="text-2xl font-bold text-gray-900">21st century</p>
+                        <p class="text-2xl font-bold text-gray-900">Mughal Era</p>
                     </div>
                 </div>
 
@@ -103,7 +110,6 @@
                         <li>• Lord Krishna has a beautiful smile and a flute in his hand.</li>
                         <li>• Beautifully carved and painted</li>
                         <li>• The statue is sitting on a beautiful shell.</li>
-                        
                     </ul>
                 </div>
 
@@ -120,27 +126,80 @@
                     </div>
                 </div>
 
-                
+                <!-- AI HERITAGE ASSISTANT -->
+
 <div class="bg-green-50 border-2 border-green-200 p-4 rounded-lg mb-4">
-<h3 class="font-semibold text-green-800 mb-3">🤖 AI Heritage Assistant</h3>
-<div class="flex gap-2 mb-3">
-<button id="aiMicBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg">🎤 Ask AI</button>
-<button id="stopAiBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg">⏹ Stop</button>
-</div>
-<p><b>Status:</b> <span id="aiStatus">Ready</span></p>
-<p class="mt-2"><b>You Asked:</b></p>
-<div id="userQuestion" class="bg-white border rounded p-2 min-h-[40px]"></div>
-<p class="mt-2"><b>AI Response:</b></p>
-<div id="aiAnswer" class="bg-white border rounded p-2 min-h-[80px]"></div>
+
+    <div class="flex items-center justify-between">
+
+        <div>
+
+            <span class="text-sm font-semibold text-green-900">
+                🤖 AI HERITAGE ASSISTANT
+            </span>
+
+            <p class="text-sm text-green-700">
+                Ask anything about Krishna Statue
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="flex gap-2 mt-3">
+
+        <button id="aiMicBtn"
+            class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">
+
+            🎤 Ask AI
+
+        </button>
+
+        <button id="stopAiBtn"
+            class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg">
+
+            ⏹ Stop
+
+        </button>
+
+    </div>
+
+    <div class="mt-3">
+
+        <strong>Status</strong>
+
+        <div id="aiStatus">
+            Ready
+        </div>
+
+    </div>
+
+    <div class="mt-2">
+
+        <strong>You Asked</strong>
+
+        <div id="userQuestion"
+            class="bg-white border rounded p-2 min-h-[40px]"></div>
+
+    </div>
+
+    <div class="mt-2">
+
+        <strong>AI Response</strong>
+
+        <div id="aiAnswer"
+            class="bg-white border rounded p-2 min-h-[80px]"></div>
+
+    </div>
+
 </div>
 
-
-<!-- MODULE 1: AR CAMERA OVERLAY -->
+                <!-- MODULE 1: AR CAMERA OVERLAY -->
                 <div class="bg-blue-50 border-2 border-blue-200 p-4 rounded-lg mb-4">
                     <div class="flex items-center justify-between">
                         <div>
                             <span class="text-sm font-semibold text-blue-900">📸 AR OVERLAY MODE</span>
-                            <p class="text-sm text-blue-700">See 3D reconstruction on camera</p>
+                            <p class="text-sm text-blue-700">See 3D model overlaid on camera</p>
                         </div>
                         <button onclick="startAROverlay()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all">
                             🎯 Start AR
@@ -161,16 +220,16 @@
         </div>
     </div>
 
-    <!-- MODULE 1 & 4: AR OVERLAY WITH PHOTO CAPTURE -->
+    <!-- MODULE 1 & 4: AR OVERLAY WITH GLB MODEL -->
     <div id="arOverlay" class="hidden">
         <video id="arVideo" autoplay playsinline></video>
         <canvas id="arCanvas"></canvas>
         
         <!-- AR Controls -->
-        <div class="absolute top-4 left-4 right-4 flex justify-between items-start">
+        <div class="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
             <div class="bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg">
-                <p class="font-semibold">🕌 Taj Mahal</p>
-                <p class="text-sm">AR Reconstruction Mode</p>
+                <p class="font-semibold">Krishna Statue</p>
+                <p class="text-sm">AR Mode - Position yourself in frame</p>
             </div>
             <button onclick="stopAROverlay()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold">
                 ❌ Close
@@ -178,7 +237,7 @@
         </div>
 
         <!-- Bottom Controls -->
-        <div class="absolute bottom-4 left-4 right-4">
+        <div class="absolute bottom-4 left-4 right-4 z-10">
             <div class="bg-black bg-opacity-70 p-4 rounded-lg">
                 <div class="flex justify-around items-center">
                     <button onclick="rotateModel(-15)" class="text-white flex flex-col items-center">
@@ -187,7 +246,7 @@
                     </button>
                     <button onclick="scaleModel(-0.1)" class="text-white flex flex-col items-center">
                         <span class="text-2xl">−</span>
-                        <span class="text-xs">Zoom Out</span>
+                        <span class="text-xs">Smaller</span>
                     </button>
                     
                     <!-- MODULE 4: PHOTO CAPTURE -->
@@ -197,12 +256,18 @@
                     
                     <button onclick="scaleModel(0.1)" class="text-white flex flex-col items-center">
                         <span class="text-2xl">+</span>
-                        <span class="text-xs">Zoom In</span>
+                        <span class="text-xs">Bigger</span>
                     </button>
                     <button onclick="rotateModel(15)" class="text-white flex flex-col items-center">
                         <span class="text-2xl">↻</span>
                         <span class="text-xs">Rotate Right</span>
                     </button>
+                </div>
+                <div class="mt-3 flex gap-2">
+                    <button onclick="moveModel(0, -20)" class="flex-1 bg-gray-700 text-white py-2 rounded">⬆️ Up</button>
+                    <button onclick="moveModel(0, 20)" class="flex-1 bg-gray-700 text-white py-2 rounded">⬇️ Down</button>
+                    <button onclick="moveModel(-20, 0)" class="flex-1 bg-gray-700 text-white py-2 rounded">⬅️ Left</button>
+                    <button onclick="moveModel(20, 0)" class="flex-1 bg-gray-700 text-white py-2 rounded">➡️ Right</button>
                 </div>
             </div>
         </div>
@@ -230,19 +295,22 @@
     <script>
         // MODULE 3: AUDIO GUIDE (Text-to-Speech)
         let isPlaying = false;
-        let aiNarration = "";
-// Original static narration removed
-// const audioScript = "This is a very beautiful statue of Lord Krishna located in Wagholi, Maharashtra. It is known for its intricate design and cultural significance. The statue depicts Lord Krishna with a serene smile and a flute in his hand, symbolizing his playful and loving nature. The craftsmanship showcases the artistic excellence of the creators. Visitors often come here to admire the statue and learn about its historical and religious importance.";
-        
+let aiNarration = "";
+
 async function toggleAudio() {
 
     const btn = document.getElementById("audioBtn");
 
     if (isPlaying) {
+
         speechSynthesis.cancel();
+
         btn.innerHTML = "▶️ Play Audio";
+
         isPlaying = false;
+
         return;
+
     }
 
     try {
@@ -251,45 +319,72 @@ async function toggleAudio() {
 
         if (aiNarration === "") {
 
-            const response = await fetch("https://hist-ar-api.onrender.com/narrate",{
-                method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({
-                    monument:"Krishna Statue"
+            const response = await fetch("http://127.0.0.1:8000/narrate", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    monument: "Krishna Statue"
+
                 })
+
             });
 
             const data = await response.json();
+
             aiNarration = data.narration;
+
         }
 
         const speech = new SpeechSynthesisUtterance(aiNarration);
-        speech.lang="en-IN";
-        speech.rate=0.95;
-        speech.pitch=1;
 
-        speech.onend=()=>{
-            btn.innerHTML="▶️ Play Audio";
-            isPlaying=false;
+        speech.lang = "en-IN";
+        speech.rate = 0.95;
+        speech.pitch = 1;
+
+        speech.onend = () => {
+
+            btn.innerHTML = "▶️ Play Audio";
+
+            isPlaying = false;
+
         };
 
         speechSynthesis.speak(speech);
-        btn.innerHTML="⏸️ Stop Audio";
-        isPlaying=true;
 
-    } catch(err){
-        console.error(err);
-        btn.innerHTML="▶️ Play Audio";
-        alert("Unable to generate AI narration.");
+        btn.innerHTML = "⏸️ Stop Audio";
+
+        isPlaying = true;
+
     }
+
+    catch(err){
+
+        console.error(err);
+
+        alert("Unable to generate AI narration.");
+
+        btn.innerHTML = "▶️ Play Audio";
+
+    }
+
 }
 
-// MODULE 1: AR OVERLAY
+        // MODULE 1 & 4: AR OVERLAY WITH THREE.JS GLB RENDERING
         let arStream = null;
         let arCanvas, arCtx, arVideo;
+        let scene, camera, renderer, glbModel;
         let rotation = 0;
         let scale = 1;
+        let posX = 0;
+        let posY = 0;
         let animationId;
+        let modelLoaded = false;
 
         async function startAROverlay() {
             try {
@@ -308,6 +403,8 @@ async function toggleAudio() {
                 arVideo.onloadedmetadata = () => {
                     arCanvas.width = arVideo.videoWidth;
                     arCanvas.height = arVideo.videoHeight;
+                    initThreeJS();
+                    loadGLBModel();
                     drawAROverlay();
                 };
             } catch (err) {
@@ -316,65 +413,77 @@ async function toggleAudio() {
             }
         }
 
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            
+            camera = new THREE.PerspectiveCamera(75, arCanvas.width / arCanvas.height, 0.1, 1000);
+            camera.position.z = 5;
+            
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(arCanvas.width, arCanvas.height);
+            renderer.setClearColor(0x000000, 0);
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+            directionalLight.position.set(5, 10, 5);
+            scene.add(directionalLight);
+        }
+
+        function loadGLBModel() {
+            const loader = new THREE.GLTFLoader();
+            
+            loader.load(
+                '../models/statue.glb',
+                function(gltf) {
+                    glbModel = gltf.scene;
+                    
+                    const box = new THREE.Box3().setFromObject(glbModel);
+                    const center = box.getCenter(new THREE.Vector3());
+                    glbModel.position.sub(center);
+                    
+                    const size = box.getSize(new THREE.Vector3());
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const scaleVal = 3 / maxDim;
+                    glbModel.scale.set(scaleVal, scaleVal, scaleVal);
+                    
+                    scene.add(glbModel);
+                    modelLoaded = true;
+                    console.log('GLB model loaded successfully');
+                },
+                function(xhr) {
+                    console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+                },
+                function(error) {
+                    console.error('Error loading GLB model:', error);
+                    alert('Could not load 3D model. Please check the file path.');
+                }
+            );
+        }
+
         function drawAROverlay() {
             if (!arStream) return;
             
             arCtx.clearRect(0, 0, arCanvas.width, arCanvas.height);
             
-            const centerX = arCanvas.width / 2;
-            const centerY = arCanvas.height / 2;
-            
-            arCtx.save();
-            arCtx.translate(centerX, centerY);
-            arCtx.rotate((rotation * Math.PI) / 180);
-            arCtx.scale(scale, scale);
-            
-            // Draw Taj Mahal
-            drawTajMahal(arCtx);
-            
-            arCtx.restore();
+            if (modelLoaded && glbModel) {
+                glbModel.rotation.y = (rotation * Math.PI) / 180;
+                glbModel.scale.set(scale, scale, scale);
+                glbModel.position.x = posX / 100;
+                glbModel.position.y = -posY / 100;
+                
+                renderer.render(scene, camera);
+                
+                arCtx.drawImage(renderer.domElement, 0, 0);
+            } else {
+                arCtx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                arCtx.font = 'bold 24px Arial';
+                arCtx.textAlign = 'center';
+                arCtx.fillText('Loading 3D Model...', arCanvas.width / 2, arCanvas.height / 2);
+            }
             
             animationId = requestAnimationFrame(drawAROverlay);
-        }
-
-        function drawTajMahal(ctx) {
-            // Main structure
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-            ctx.strokeStyle = '#d4af37';
-            ctx.lineWidth = 3;
-            
-            // Base
-            ctx.fillRect(-100, 20, 200, 40);
-            ctx.strokeRect(-100, 20, 200, 40);
-            
-            // Main building
-            ctx.fillRect(-80, -40, 160, 60);
-            ctx.strokeRect(-80, -40, 160, 60);
-            
-            // Central dome
-            ctx.beginPath();
-            ctx.ellipse(0, -60, 50, 30, 0, Math.PI, 0);
-            ctx.fill();
-            ctx.stroke();
-            
-            // Spire
-            ctx.beginPath();
-            ctx.moveTo(-10, -90);
-            ctx.lineTo(0, -110);
-            ctx.lineTo(10, -90);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-            
-            // Minarets
-            [-90, 90].forEach(x => {
-                ctx.fillRect(x - 8, -30, 16, 70);
-                ctx.strokeRect(x - 8, -30, 16, 70);
-                ctx.beginPath();
-                ctx.arc(x, -35, 10, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-            });
         }
 
         function rotateModel(angle) {
@@ -382,7 +491,12 @@ async function toggleAudio() {
         }
 
         function scaleModel(delta) {
-            scale = Math.max(0.5, Math.min(2, scale + delta));
+            scale = Math.max(0.3, Math.min(3, scale + delta));
+        }
+
+        function moveModel(deltaX, deltaY) {
+            posX += deltaX;
+            posY += deltaY;
         }
 
         function stopAROverlay() {
@@ -396,6 +510,18 @@ async function toggleAudio() {
             document.getElementById('arOverlay').classList.add('hidden');
             rotation = 0;
             scale = 1;
+            posX = 0;
+            posY = 0;
+            modelLoaded = false;
+            
+            if (renderer) {
+                renderer.dispose();
+                renderer = null;
+            }
+            if (scene) {
+                scene.clear();
+                scene = null;
+            }
         }
 
         // MODULE 4: PHOTO CAPTURE
@@ -407,20 +533,19 @@ async function toggleAudio() {
             photoCanvas.height = arCanvas.height;
             const photoCtx = photoCanvas.getContext('2d');
             
-            // Draw video frame
-            photoCtx.drawImage(arVideo, 0, 0);
+            photoCtx.drawImage(arVideo, 0, 0, photoCanvas.width, photoCanvas.height);
             
-            // Draw AR overlay
-            photoCtx.drawImage(arCanvas, 0, 0);
+            if (modelLoaded && renderer) {
+                photoCtx.drawImage(renderer.domElement, 0, 0);
+            }
             
-            // Add watermark
             photoCtx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-            photoCtx.fillRect(0, photoCanvas.height - 60, photoCanvas.width, 60);
+            photoCtx.fillRect(0, photoCanvas.height - 80, photoCanvas.width, 80);
             photoCtx.fillStyle = 'white';
-            photoCtx.font = 'bold 24px Arial';
-            photoCtx.fillText('🕌 Taj Mahal', 20, photoCanvas.height - 30);
-            photoCtx.font = '16px Arial';
-            photoCtx.fillText(new Date().toLocaleDateString(), 20, photoCanvas.height - 10);
+            photoCtx.font = 'bold 32px Arial';
+            photoCtx.fillText('Krishna Statue', 30, photoCanvas.height - 40);
+            photoCtx.font = '20px Arial';
+            photoCtx.fillText(new Date().toLocaleDateString(), 30, photoCanvas.height - 15);
             
             capturedPhotoData = photoCanvas.toDataURL('image/png');
             document.getElementById('capturedPhoto').src = capturedPhotoData;
@@ -429,7 +554,7 @@ async function toggleAudio() {
 
         function downloadPhoto() {
             const link = document.createElement('a');
-            link.download = `taj-mahal-${Date.now()}.png`;
+            link.download = `krishna-statue-ar-${Date.now()}.png`;
             link.href = capturedPhotoData;
             link.click();
         }
@@ -439,15 +564,15 @@ async function toggleAudio() {
                 fetch(capturedPhotoData)
                     .then(res => res.blob())
                     .then(blob => {
-                        const file = new File([blob], 'taj-mahal.png', { type: 'image/png' });
+                        const file = new File([blob], 'krishna-statue-ar.png', { type: 'image/png' });
                         navigator.share({
-                            title: 'Taj Mahal AR Experience',
-                            text: 'Check out my AR photo at the Taj Mahal!',
+                            title: 'Krishna Statue AR Experience',
+                            text: 'Check out my AR photo with the Krishna Statue!',
                             files: [file]
                         });
                     });
             } else {
-                alert('Share feature not supported. Photo has been copied!');
+                alert('Share feature not supported on this device.');
             }
         }
 
@@ -455,12 +580,11 @@ async function toggleAudio() {
             document.getElementById('photoModal').classList.add('hidden');
         }
 
-        // Share monument
         function shareMonument() {
             if (navigator.share) {
                 navigator.share({
-                    title: 'Taj Mahal AR Experience',
-                    text: 'Explore the Taj Mahal in AR!',
+                    title: 'Krishna Statuet AR Experience',
+                    text: 'Explore the Krishna Statue in AR!',
                     url: window.location.href
                 });
             } else {
@@ -469,15 +593,25 @@ async function toggleAudio() {
             }
         }
 
-        // Cleanup
         window.addEventListener('beforeunload', () => {
             stopAROverlay();
             if (isPlaying) window.speechSynthesis.cancel();
         });
     </script>
-<script src="../js/voiceAssistant.js"></script>
+
+    <script src="../js/voiceAssistant.js"></script>
+
 <script>
-new VoiceAssistant({monument:"Krishna Statue",apiUrl:"https://hist-ar-api.onrender.com/chat"});
+
+new VoiceAssistant({
+
+    monument: "Krishna Statue",
+
+    apiUrl: "http://127.0.0.1:8000/chat"
+
+});
+
 </script>
+
 </body>
 </html>
